@@ -13,3 +13,10 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+*.db
+*.sum
+*.log
+*.txt
+.DS_Store
+Thumbs.db
+.idea
