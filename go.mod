@@ -1,4 +1,4 @@
-module github_com/gokit
+module github.com/lengnuan-v/gokit
 
 go 1.14
 
