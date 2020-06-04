@@ -15,11 +15,11 @@ import (
 )
 
 var format = logging.MustStringFormatter(
-	`%{color}%{time:2006-01-02 15:04:05} %{shortfile} ▶ %{level:.4s} %{message}%{color:reset}`,
+	`%{color}%{time:2006-01-02 15:04:05} %{shortfile} ▶ %{level} %{message}%{color:reset}`,
 )
 
 var formatFile = logging.MustStringFormatter(
-	`%{time:2006-01-02 15:04:05} %{shortfile} ▶ %{level:.4s} %{message}`,
+	`%{time:2006-01-02 15:04:05} %{shortfile} ▶ %{level} %{message}`,
 )
 
 func Log(filename ...string) *logging.Logger {
