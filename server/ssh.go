@@ -1,12 +1,12 @@
 // +----------------------------------------------------------------------
-// | ssh方法
+// | ssh
 // +----------------------------------------------------------------------
 // | User: Lengnuan <25314666@qq.com>
 // +----------------------------------------------------------------------
-// | Date: 2020年04月02日
+// | Date: 2020年06月04日
 // +----------------------------------------------------------------------
 
-package gohelp
+package gokit
 
 import (
 	"bytes"
@@ -14,18 +14,17 @@ import (
 	"golang.org/x/crypto/ssh"
 	"net"
 	"os/exec"
-	"strconv"
 	"time"
 )
 
-type cli struct {
-	IP       string //IP地址
-	Username string //用户名
-	Password string //密码
-	Port     int    //端口号
+type SSH struct {
+	Host     string // 地址
+	Username string // 用户名
+	Password string // 密码
+	Port     int    // 端口号
 }
 
-func (c cli) ssh() (*ssh.Session, error) {
+func (s *SSH) SSHClient() (*ssh.Session, error) {
 	var (
 		auth         []ssh.AuthMethod
 		addr         string
@@ -35,16 +34,16 @@ func (c cli) ssh() (*ssh.Session, error) {
 		err          error
 	)
 	auth = make([]ssh.AuthMethod, 0)
-	auth = append(auth, ssh.Password(c.Password))
+	auth = append(auth, ssh.Password(s.Password))
 	clientConfig = &ssh.ClientConfig{
-		User:    c.Username,
+		User:    s.Username,
 		Auth:    auth,
 		Timeout: 30 * time.Second,
 		HostKeyCallback: func(hostname string, remote net.Addr, key ssh.PublicKey) error {
 			return nil
 		},
 	}
-	addr = fmt.Sprintf("%s:%d", c.IP, c.Port)
+	addr = fmt.Sprintf("%s:%d", s.Host, s.Port)
 	if client, err = ssh.Dial("tcp", addr, clientConfig); err != nil {
 		return nil, err
 	}
@@ -55,18 +54,15 @@ func (c cli) ssh() (*ssh.Session, error) {
 }
 
 // 执行远程SSH命令行
-// info 服务器信息
 // cmd 执行的命令行
-func ExecSSH(info map[string]string, cmd string) ([]byte, error) {
-	port, _ := strconv.Atoi(info["port"])
-	cli := cli{IP: info["ip"], Username: info["username"], Password: info["password"], Port: port}
-	session, err := cli.ssh()
-	defer session.Close()
-	if err != nil {
+func (s *SSH) ExecSSH(c string) ([]byte, error) {
+	if session, err := s.SSHClient(); err != nil {
 		return nil, err
+	} else {
+		defer session.Close()
+		buf, e := session.Output(c)
+		return buf, e
 	}
-	buf, e := session.Output(cmd)
-	return buf, e
 }
 
 // 执行本地命令行

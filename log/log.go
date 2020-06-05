@@ -26,7 +26,7 @@ var formatFile = logging.MustStringFormatter(
 // dirname 目录名称
 func Log(dirname ...string) *logging.Logger {
 	var backend1Leveled logging.LeveledBackend
-	var logger = logging.MustGetLogger("example")
+	var logger = logging.MustGetLogger("logging")
 
 	// 写入文件、目录不存在，则创建
 	if len(dirname) >= 1 {
