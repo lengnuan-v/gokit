@@ -31,9 +31,9 @@ func Log(dirname ...string) *logging.Logger {
 	// 写入文件、目录不存在，则创建
 	if len(dirname) >= 1 {
 		wd, _ := os.Getwd()
-		path := fmt.Sprintf("%s/%s/%s", wd, "runtime", dirname[0])
+		path := fmt.Sprintf("%s/%s/%s", wd, "runtime", "log")
 		_ = os.MkdirAll(path, 0777)
-		file, _ := os.OpenFile(fmt.Sprintf("%s/log_%s.log", path, time.Now().Format("2006-01-02")), os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+		file, _ := os.OpenFile(fmt.Sprintf("%s/%s_%s.log", path, dirname[0], time.Now().Format("2006-01-02")), os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 		backend1 := logging.NewLogBackend(file, "", 0)
 		backend1Formatter := logging.NewBackendFormatter(backend1, formatFile)
 		backend1Leveled = logging.AddModuleLevel(backend1Formatter)
