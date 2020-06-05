@@ -23,14 +23,16 @@ var formatFile = logging.MustStringFormatter(
 	`%{time:2006-01-02 15:04:05} %{shortfile} ▶ %{level} %{message}`,
 )
 
-func Log(filename ...string) *logging.Logger {
+// dirname 目录名称
+func Log(dirname ...string) *logging.Logger {
 	var backend1Leveled logging.LeveledBackend
 	var logger = logging.MustGetLogger("example")
 
 	// 写入文件、目录不存在，则创建
-	if len(filename) >= 1 {
+	if len(dirname) >= 1 {
 		wd, _ := os.Getwd()
-		path := fmt.Sprintf("%s/%s/%s", wd, "runtime", filename[0])
+		fmt.Println(wd)
+		path := fmt.Sprintf("%s/%s/%s", wd, "runtime", dirname[0])
 		_ = os.MkdirAll(path, 0777)
 		file, _ := os.OpenFile(fmt.Sprintf("%s/log_%s.txt", path, time.Now().Format("2006-01-02")), os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 		backend1 := logging.NewLogBackend(file, "", 0)
