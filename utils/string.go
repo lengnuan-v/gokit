@@ -20,6 +20,7 @@ import (
 	"strings"
 	"unicode"
 	"unicode/utf8"
+	"html"
 )
 
 // string转成int
