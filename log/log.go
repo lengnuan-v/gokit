@@ -16,7 +16,7 @@ import (
 )
 
 var format = logging.MustStringFormatter(
-	`%{color}%{time:2006-01-02 15:04:05} %{shortfile} ▶ %{level} %{message}%{color:reset}`,
+	`%{color}%{time:2006-01-02 15:04:05} %{shortfile} ▶ %{level}%{color:reset} %{message}`,
 )
 
 var formatFile = logging.MustStringFormatter(
