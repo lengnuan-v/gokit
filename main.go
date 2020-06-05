@@ -8,6 +8,11 @@
 
 package main
 
+import (
+	"fmt"
+	gokit "github.com/lengnuan-v/gokit/aliyun"
+)
+
 func main() {
 	//var item = make(map[string]interface{})
 	//item["host"] = "192.168.1.171"
@@ -15,7 +20,9 @@ func main() {
 	//item["password"] = "Eo$Tev$QFCSuwx*a"
 	//item["port"] = 22
 
-	//db := gokit.DB{Dsn: "root:1234567890@tcp(127.0.0.1:3306)/haoyang?charset=utf8", Prefix: "ln_"}
+	aliyun := gokit.SDK{AccessKeyId: "LTAICeaRHntqwbWZ", AccessKeySecret: "zmyjb0ykHTqfYI5wTsR3lVHyO8HeBC"}
+	d, e := aliyun.AliyunToken()
+	fmt.Println(string(d), e)
 	//var item = make(map[string]interface{})
 	//item["name"] = 11
 	//fmt.Println(db.Query("select * from ln_word where id=100"))
