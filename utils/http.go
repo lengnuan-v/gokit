@@ -10,6 +10,7 @@ package gokit
 
 import (
 	"bytes"
+	"fmt"
 	"io/ioutil"
 	"math/rand"
 	"net/http"
@@ -48,7 +49,7 @@ type AbuyunProxy struct {
 }
 
 func (p AbuyunProxy) ProxyClient() *http.Client {
-	proxyUrl, _ := url.Parse("http://" + p.AppID + ":" + p.AppSecret + "@" + proxyServer)
+	proxyUrl, _ := url.Parse(fmt.Sprintf("http://%s:%s@%s", p.AppID, p.AppSecret, proxyServer))
 	return &http.Client{Transport: &http.Transport{Proxy: http.ProxyURL(proxyUrl)}}
 }
 
