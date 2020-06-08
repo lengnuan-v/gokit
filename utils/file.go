@@ -16,6 +16,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"syscall"
 )
@@ -220,4 +221,15 @@ func RecursiveListPath(path string, slice *[]string) {
 	path2 := filepath.Dir(fmt.Sprintf("/%s", strings.TrimLeft(path, "/")))
 	RecursiveListPath(path2, slice)
 	*slice = append(*slice, path)
+}
+
+// 获取当前系统桌面
+func GetUserHome() string {
+	var home string
+	if runtime.GOOS == "windows" {
+		home = fmt.Sprintf("%s\\%s\\", os.Getenv("USERPROFILE"), "Desktop")
+	} else {
+		home = fmt.Sprintf("%s/%s/", os.Getenv("HOME"), "Desktop")
+	}
+	return home
 }
