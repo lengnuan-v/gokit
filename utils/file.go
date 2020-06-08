@@ -223,13 +223,13 @@ func RecursiveListPath(path string, slice *[]string) {
 	*slice = append(*slice, path)
 }
 
-// 获取当前系统桌面
+// 获取当前系统HOME
 func GetUserHome() string {
 	var home string
 	if runtime.GOOS == "windows" {
-		home = fmt.Sprintf("%s\\%s\\", os.Getenv("USERPROFILE"), "Desktop")
+		home = os.Getenv("USERPROFILE")
 	} else {
-		home = fmt.Sprintf("%s/%s/", os.Getenv("HOME"), "Desktop")
+		home = os.Getenv("HOME")
 	}
 	return home
 }
