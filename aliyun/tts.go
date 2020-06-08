@@ -1,5 +1,5 @@
 // +----------------------------------------------------------------------
-// | tts 语音合成
+// | 阿里云 语音合成 (文字转语音)
 // +----------------------------------------------------------------------
 // | User: Lengnuan <25314666@qq.com>
 // +----------------------------------------------------------------------
@@ -30,7 +30,8 @@ type TTS struct {
 	PitchRate  int    // PitchRate 语调，范围是-500~500，可选，默认是0
 }
 
-func (t *TTS) GetAliyunTts() ([]byte, error) {
+// 语音合成 (文字转语音)
+func (t *TTS) Aliyuntts() ([]byte, error) {
 	var err error
 	bodyContent := make(map[string]interface{})
 	bodyContent["appkey"] = t.Appkey
