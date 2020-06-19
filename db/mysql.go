@@ -78,8 +78,18 @@ func (d *DB) Count(tanleName string, cond string) (int64, error) {
 	}
 }
 
-// 查询数据
-func (d *DB) Select(tanleName string, fields []string, cond string, order string) ([]map[string]interface{}, error) {
+// 查询一条数据
+func (d *DB) SelectRow(tanleName string, fields []string, cond string) (map[string]interface{}, error) {
+	if connection, err := d.GetDb(); err != nil {
+		return nil, err
+	} else {
+		defer connection.Close()
+		return connection.NewSession().Table(tanleName).Fields(gokit.Implode(",", fields)).Where(cond).First()
+	}
+}
+
+// 查询多条数据
+func (d *DB) SelectRows(tanleName string, fields []string, cond string, order string) ([]map[string]interface{}, error) {
 	if connection, err := d.GetDb(); err != nil {
 		return nil, err
 	} else {
